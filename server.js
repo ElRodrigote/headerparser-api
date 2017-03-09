@@ -1,27 +1,27 @@
-var express = require('express');
+var server = require('express');
+var app = server();
 var useragent = require('useragent');
 
-var app = express();
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3500;
+
+app.listen(port, function(){
+  console.log("Listening on port: " + port);
+});
 
 app.get('/', function(req, res) {
-  var userAgent = useragent.parse(req.headers['user-agent']);
-  var userIp = req.headers["x-forwarded-for"];
+  var agent = useragent.parse(req.headers['user-agent']);
 
-  if (userIp){
-    var list = userIp.split(",");
-    userIp = list[list.length-1];
+  var ipAddr = req.headers["x-forwarded-for"];
+  if (ipAddr){
+    var list = ipAddr.split(",");
+    ipAddr = list[list.length-1];
   } else {
-    userIp = req.connection.remoteAddress;
+    ipAddr = req.connection.remoteAddress;
   }
 
   res.json({
-    ip: userIp,
+    ip: ipAddr,
     "language": req.headers['accept-language'].split(',')[0],
-    OS: userAgent.os.family
+    OS: agent.os.family
   });
-});
-
-app.listen(port, function(){
-  console.log("Listening to port: " + port);
 });
