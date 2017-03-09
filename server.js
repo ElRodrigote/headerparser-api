@@ -1,5 +1,5 @@
 var server = require('express');
-var useragent = require('uservisitorAgent');
+var useragent = require('useragent');
 
 var app = server();
 var port = process.env.PORT || 3500;
@@ -16,9 +16,9 @@ app.get('/', function(req, res) {
   }
 
   res.json({
-    ip: visitorIp,
-    lang: req.headers['accept-language'].split(',')[0],
-    os: visitorAgent.os.family
+    "ip": visitorIp,
+    "lang": req.headers['accept-language'].split(',')[0],
+    "os": visitorAgent.os.family
   });
 });
 
