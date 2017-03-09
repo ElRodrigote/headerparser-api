@@ -17,8 +17,8 @@ app.get('/', function(req, res) {
 
   res.json({
     ip: userIp,
-    lang: req.headers['accept-language'].split(',')[0],
-    os: userAgent.os.family
+    "language": req.headers['accept-language'].split(',')[0],
+    OS: userAgent.os.family
   });
 });
 
